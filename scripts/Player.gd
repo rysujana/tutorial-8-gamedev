@@ -11,6 +11,7 @@ var velocity = Vector2()
 onready var animator = self.get_node("Animator")
 onready var sprite = self.get_node("Sprite")
 
+onready var particle = self.get_node("Particles2D")
 
 func get_input():
 	velocity.x = 0
@@ -27,6 +28,10 @@ func _physics_process(delta):
 	velocity = move_and_slide(velocity, UP)
 
 func _process(delta):
+	if is_on_floor() and (Input.is_action_pressed("left") or Input.is_action_pressed("right")):
+		particle.set_emitting(true)
+	else:
+		particle.set_emitting(false)
 	if velocity.y != 0:
 		animator.play("Jump")
 	elif velocity.x != 0:
